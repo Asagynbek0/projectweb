@@ -44,7 +44,7 @@ recommendations, and shows historical pollution trends.
 - Django REST Framework
 
 **Database**
-- PostgreSQL
+- SQLite 
 
 ---
 

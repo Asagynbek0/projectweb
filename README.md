@@ -27,7 +27,7 @@ recommendations, and shows historical pollution trends.
 - Smart daily recommendations based on air quality
 - Data for each of Almaty's 8 districts
 - Responsive design for mobile and desktop
-- Historical archive of air quality records
+
 
 ---
 

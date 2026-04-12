@@ -143,7 +143,7 @@ App available at: http://localhost:4200
 |------|-------------------|
 | Alinur| Frontend (Angular)|
 | Abdulmukhit| Backend (Django)  |
-| ...  | Design / UI       |
+| Beibit Imekeyev | Design / UI       |
 
 ---
 

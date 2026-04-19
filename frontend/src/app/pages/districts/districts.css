@@ -1,0 +1,72 @@
+.districts-page h1 {
+  font-size: 36px;
+  color: #1e8f6d;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #4b5563;
+  margin-bottom: 30px;
+}
+
+.district-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.district-card {
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.district-card h2 {
+  margin-bottom: 14px;
+  color: #111827;
+}
+
+.district-card p {
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #374151;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.good {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.moderate {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.unhealthy {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+button {
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #1e8f6d;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}

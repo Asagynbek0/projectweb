@@ -1,0 +1,23 @@
+<section class="districts-page">
+  <h1>Almaty Districts</h1>
+  <p class="subtitle">Current air quality status across the city</p>
+
+  <div class="district-grid">
+    @for (district of districts; track district.id) {
+      <div class="district-card">
+        <h2>{{ district.name }}</h2>
+        <p><strong>AQI:</strong> {{ district.aqi }}</p>
+        <p>
+          <strong>Status:</strong>
+          <span class="status" [class.good]="district.status === 'Good'"
+                [class.moderate]="district.status === 'Moderate'"
+                [class.unhealthy]="district.status === 'Unhealthy'">
+            {{ district.status }}
+          </span>
+        </p>
+
+        <button>View Details</button>
+      </div>
+    }
+  </div>
+</section>

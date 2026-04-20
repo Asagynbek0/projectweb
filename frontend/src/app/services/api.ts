@@ -24,6 +24,6 @@ export class ApiService {
   }
 
   login(data: LoginData): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login/`, data);
+    return this.http.post(`${this.baseUrl}/auth/login/`, data);
   }
 }

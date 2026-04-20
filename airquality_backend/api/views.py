@@ -20,6 +20,9 @@ from .serializers import (
 )
 
 
+# ════════════════════════════════════════════════════════════════════════════════
+# AUTH  —  Function-Based Views  (FBV #1 and FBV #2)
+# ════════════════════════════════════════════════════════════════════════════════
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -148,73 +151,77 @@ class AirQualitySummaryView(APIView):
 
 
 # ════════════════════════════════════════════════════════════════════════════════
-# OPENAQ INTEGRATION  —  CBV #4
+# AQICN REAL DATA INTEGRATION  —  CBV #4
 # ════════════════════════════════════════════════════════════════════════════════
 
 class FetchFromOpenAQView(APIView):
-    """CBV #4 — Fetches latest readings from OpenAQ for all stations that have
-    an openaq_location_id, and saves them to the database."""
+    """CBV #4 — Fetches REAL live air quality data from AQICN API for Almaty
+    and saves it to all active stations in the database."""
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        stations = Station.objects.filter(
-            is_active=True, openaq_location_id__isnull=False
-        )
-        if not stations.exists():
-            return Response({'message': 'No stations with OpenAQ location IDs.'})
+    # AQICN stations to fetch — these are real Almaty monitoring points
+    AQICN_STATIONS = [
+        {'feed': 'almaty',            'name': 'Алмалинский район'},
+        {'feed': '@9892',             'name': 'Бостандыкский район'},
+        {'feed': '@9893',             'name': 'Медеуский район'},
+        {'feed': 'kazakhstan/almaty', 'name': 'Ауэзовский район'},
+    ]
 
+    TOKEN = '26e1428f79a83269e0fada4badb34388e5e79728'
+
+    def post(self, request):
         saved = []
         errors = []
 
-        for station in stations:
-            url = f"{settings.OPENAQ_API_URL}/locations/{station.openaq_location_id}/latest"
-            try:
-                resp = requests.get(url, timeout=10, headers={'Accept': 'application/json'})
-                resp.raise_for_status()
-                data = resp.json()
+        # Get all active stations from DB
+        stations = Station.objects.filter(is_active=True)
+        if not stations.exists():
+            return Response({'error': 'No active stations in database. Run: python manage.py seed'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
-                # Parse OpenAQ v3 response
-                results = data.get('results', [])
-                if not results:
-                    errors.append(f'No data for station {station.name}')
-                    continue
+        # Fetch real data from AQICN for Almaty
+        url = f'https://api.waqi.info/feed/almaty/?token={self.TOKEN}'
+        try:
+            resp = requests.get(url, timeout=10)
+            resp.raise_for_status()
+            data = resp.json()
 
-                # Build a flat dict of parameter -> value
-                measurements = {}
-                recorded_at = timezone.now()
-                for item in results:
-                    param = item.get('parameter', {}).get('name', '').lower()
-                    value = item.get('value')
-                    dt = item.get('datetime', {}).get('utc')
-                    if param and value is not None:
-                        measurements[param] = value
-                    if dt and recorded_at == timezone.now():
-                        from django.utils.dateparse import parse_datetime
-                        parsed = parse_datetime(dt)
-                        if parsed:
-                            recorded_at = parsed
+            if data.get('status') != 'ok':
+                return Response({'error': f"AQICN error: {data.get('data', 'unknown error')}"},
+                                status=status.HTTP_502_BAD_GATEWAY)
 
-                # pm25 -> rough AQI (simple linear for display purposes)
-                pm25 = measurements.get('pm25')
-                aqi = self._pm25_to_aqi(pm25) if pm25 else 50
+            d = data['data']
+            iaqi = d.get('iaqi', {})
 
+            # Extract pollutant values
+            aqi     = d.get('aqi', 50)
+            pm25    = iaqi.get('pm25', {}).get('v')
+            pm10    = iaqi.get('pm10', {}).get('v')
+            no2     = iaqi.get('no2',  {}).get('v')
+            o3      = iaqi.get('o3',   {}).get('v')
+            co      = iaqi.get('co',   {}).get('v')
+
+            # Save a reading for EVERY active station using the same real Almaty data
+            for station in stations:
                 reading = AirQualityReading.objects.create(
                     station=station,
-                    aqi=aqi,
-                    pm25=pm25,
-                    pm10=measurements.get('pm10'),
-                    no2=measurements.get('no2'),
-                    o3=measurements.get('o3'),
-                    co=measurements.get('co'),
-                    recorded_at=recorded_at,
-                    source='openaq',
+                    aqi=int(aqi) if aqi else 50,
+                    pm25=float(pm25) if pm25 is not None else None,
+                    pm10=float(pm10) if pm10 is not None else None,
+                    no2=float(no2)   if no2  is not None else None,
+                    o3=float(o3)     if o3   is not None else None,
+                    co=float(co)     if co   is not None else None,
+                    recorded_at=timezone.now(),
+                    source='aqicn',
                 )
                 saved.append(AirQualityReadingSerializer(reading).data)
 
-            except requests.RequestException as e:
-                errors.append(f'Error fetching {station.name}: {str(e)}')
+        except requests.RequestException as e:
+            errors.append(f'Network error fetching AQICN: {str(e)}')
 
         return Response({
+            'source': 'AQICN — Real Almaty Air Quality Data',
+            'saved_count': len(saved),
             'saved': saved,
             'errors': errors,
         }, status=status.HTTP_200_OK)

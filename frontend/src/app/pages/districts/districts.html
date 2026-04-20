@@ -1,18 +1,35 @@
 <section class="districts-page">
   <h1>Almaty Districts</h1>
+  <p class="subtitle">Current air quality status across the city.</p>
 
   <p *ngIf="isLoading">Loading stations...</p>
   <p *ngIf="errorMessage">{{ errorMessage }}</p>
 
   <div class="district-grid" *ngIf="!isLoading && districts.length > 0">
-    <div class="district-card" *ngFor="let district of districts">
+    <div
+      class="district-card"
+      *ngFor="let district of districts"
+      [routerLink]="['/districts', district.id]"
+    >
       <h2>{{ district.name }}</h2>
-      <p><strong>AQI:</strong> {{ district.aqi }}</p>
-      <p><strong>Status:</strong> {{ district.status }}</p>
 
-      <button [routerLink]="['/districts', district.id]">
-        View Details
-      </button>
+      <div class="aqi-box">
+        <p>AQI</p>
+        <div class="aqi-value">{{ district.aqi }}</div>
+      </div>
+
+      <p>
+        <span
+          class="status"
+          [class.good]="district.status === 'Good'"
+          [class.moderate]="district.status === 'Moderate'"
+          [class.unhealthy]="district.status === 'Unhealthy'"
+        >
+          {{ district.status }}
+        </span>
+      </p>
+
+      <button type="button">View Details</button>
     </div>
   </div>
 </section>

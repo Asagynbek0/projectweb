@@ -5,16 +5,11 @@
     <a routerLink="/home" routerLinkActive="active-link">Home</a>
     <a routerLink="/districts" routerLinkActive="active-link">Districts</a>
     <a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
-
-    @if (!authService.isLoggedIn()) {
-      <a routerLink="/login" routerLinkActive="active-link">Login</a>
-      <a routerLink="/register" routerLinkActive="active-link">Register</a>
-    } @else {
-      <button class="logout-btn" (click)="onLogout()">Logout</button>
-    }
+    <a routerLink="/login" routerLinkActive="active-link">Login</a>
+    <a routerLink="/register" class="register-btn">Register</a>
   </div>
 </nav>
 
-<main class="content">
+<main class="page-shell">
   <router-outlet></router-outlet>
 </main>

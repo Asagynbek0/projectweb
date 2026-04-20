@@ -1,15 +1,41 @@
-<section>
-  <a routerLink="/districts">← Back</a>
+<section class="detail-page">
+  <a routerLink="/districts" class="back-link">← Back to Districts</a>
 
-  <p *ngIf="isLoading">Loading...</p>
-  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+  <p *ngIf="isLoading" class="loading-text">Loading station details...</p>
+  <p *ngIf="errorMessage" class="error-text">{{ errorMessage }}</p>
 
-  <div *ngIf="latestReading">
-    <h1>{{ stationName }}</h1>
-    <p><strong>AQI:</strong> {{ latestReading.aqi }}</p>
-    <p><strong>PM2.5:</strong> {{ latestReading.pm25 ?? '—' }}</p>
-    <p><strong>PM10:</strong> {{ latestReading.pm10 ?? '—' }}</p>
-    <p><strong>NO2:</strong> {{ latestReading.no2 ?? '—' }}</p>
-    <p><strong>CO:</strong> {{ latestReading.co ?? '—' }}</p>
+  <div *ngIf="latestReading" class="detail-card">
+    <div class="detail-header">
+      <div>
+        <span class="eyebrow">District Details</span>
+        <h1>{{ stationName }}</h1>
+      </div>
+
+      <span
+        class="status-pill"
+        [class.good]="mapCategoryToStatus(latestReading.category) === 'Good'"
+        [class.moderate]="mapCategoryToStatus(latestReading.category) === 'Moderate'"
+        [class.unhealthy]="mapCategoryToStatus(latestReading.category) === 'Unhealthy'"
+      >
+        {{ mapCategoryToStatus(latestReading.category) }}
+      </span>
+    </div>
+
+    <div class="aqi-box">
+      <span class="aqi-label">Current AQI</span>
+      <span class="aqi-value">{{ latestReading.aqi }}</span>
+    </div>
+
+    <div class="pollution-grid">
+  <div class="pollution-card">
+    <span class="pollution-name">NO2</span>
+    <strong>{{ latestReading.no2 }}</strong>
+  </div>
+
+  <div class="pollution-card">
+    <span class="pollution-name">CO</span>
+    <strong>{{ latestReading.co }}</strong>
+  </div>
+</div>
   </div>
 </section>

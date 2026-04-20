@@ -1,44 +1,149 @@
 <section class="dashboard-page">
+
   <div class="dashboard-header">
-    <h1>Air Quality Dashboard</h1>
-    <p>Overview of pollution levels and environmental trends in Almaty</p>
-  </div>
-
-  <div class="summary-grid">
-    @for (card of summaryCards; track card.title) {
-      <div class="summary-card">
-        <h3>{{ card.title }}</h3>
-        <h2>{{ card.value }}</h2>
-        <span class="badge"
-              [class.good]="card.status === 'Good'"
-              [class.moderate]="card.status === 'Moderate'"
-              [class.unhealthy]="card.status === 'Unhealthy'"
-              [class.live]="card.status === 'Live'">
-          {{ card.status }}
-        </span>
-      </div>
-    }
-  </div>
-
-  <div class="dashboard-content">
-    <div class="panel">
-      <h2>Pollution Trends</h2>
-      <div class="trend-list">
-        @for (trend of trends; track trend.period) {
-          <div class="trend-item">
-            <span>{{ trend.period }}</span>
-            <strong>{{ trend.value }}</strong>
-          </div>
-        }
-      </div>
-    </div>
-
-    <div class="panel">
-      <h2>Daily Recommendation</h2>
-      <p>
-        Air quality is currently moderate. Outdoor activity is acceptable for most people,
-        but sensitive groups should avoid long exposure during peak traffic hours.
+    <div>
+      <p class="dashboard-label">Monitoring Overview</p>
+      <h1>Air Quality Dashboard</h1>
+      <p class="dashboard-subtitle">
+        Overview of pollution levels and trends in Almaty.
       </p>
     </div>
   </div>
+
+  <!-- TOP STATS -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <span>Average AQI</span>
+        <span class="badge moderate">Moderate</span>
+      </div>
+
+      <h2>78</h2>
+
+      <div class="progress">
+        <div class="progress-bar moderate" style="width: 60%"></div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <span>Safest District</span>
+        <span class="badge good">Good</span>
+      </div>
+
+      <h2>Nauryzbay</h2>
+
+      <div class="progress">
+        <div class="progress-bar good" style="width: 30%"></div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <span>Most Polluted</span>
+        <span class="badge unhealthy">Unhealthy</span>
+      </div>
+
+      <h2>Turksib</h2>
+
+      <div class="progress">
+        <div class="progress-bar unhealthy" style="width: 85%"></div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <span>Active Stations</span>
+        <span class="badge live">Live</span>
+      </div>
+
+      <h2>8</h2>
+
+      <div class="progress">
+        <div class="progress-bar live" style="width: 100%"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="dashboard-main">
+
+    <!-- LEFT -->
+    <div class="left">
+
+      <div class="card">
+        <h3>Pollution Trends</h3>
+
+        <div class="trend">
+          <span>Today</span>
+          <strong>78 AQI</strong>
+        </div>
+
+        <div class="trend">
+          <span>This Week</span>
+          <strong>84 AQI</strong>
+        </div>
+
+        <div class="trend">
+          <span>This Month</span>
+          <strong>89 AQI</strong>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <h3>Top Districts</h3>
+
+        <div class="district-row">
+          <span>Nauryzbay</span>
+          <div class="mini-bar good"></div>
+        </div>
+
+        <div class="district-row">
+          <span>Almaly</span>
+          <div class="mini-bar moderate"></div>
+        </div>
+
+        <div class="district-row">
+          <span>Turksib</span>
+          <div class="mini-bar unhealthy"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+
+      <div class="card">
+        <h3>Daily Recommendation</h3>
+
+        <p>
+          Air quality is moderate. Outdoor activity is safe for most people.
+          Sensitive groups should limit prolonged exposure.
+        </p>
+
+        <div class="tip">
+          Best time: <strong>Morning</strong>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Quick Stats</h3>
+
+        <ul class="stats-list">
+          <li>🌿 Clean areas: 3</li>
+          <li>⚠️ Moderate: 4</li>
+          <li>🚫 Unhealthy: 1</li>
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </section>

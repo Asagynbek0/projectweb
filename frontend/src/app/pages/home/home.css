@@ -1,192 +1,87 @@
-.home-page {
-  position: relative;
-  min-height: calc(100vh - 78px);
+
+.overlay {
+  background: linear-gradient(
+    to right,
+    rgba(3, 57, 85, 0.8),
+    rgba(14, 165, 233, 0.6)
+  );
+  height: 100%;
   display: flex;
   align-items: center;
-  padding: 40px;
-  background-image: url('/images/almaty-map.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  overflow: hidden;
-  filter: saturate(0.8);
+  justify-content: center;
 }
 
-
-.map-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(244, 248, 251, 0.78);
-  backdrop-filter: blur(1px);
-  z-index: 1;
+.hero-content {
+  text-align: center;
+  color: white;
+  max-width: 700px;
 }
 
-.hero {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 40px;
-  align-items: center;
+.hero-content h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
-.hero-text h1 {
-  font-size: 84px;
-  color: #1e8f6d;
-  margin-bottom: 24px;
-  line-height: 1;
-}
-
-.hero-text p {
-  font-size: 22px;
-  line-height: 1.7;
-  color: #24324a;
-  max-width: 720px;
+.hero-content p {
+  font-size: 18px;
   margin-bottom: 30px;
+  color: #d1d5db;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
 }
 
-.primary-btn,
-.secondary-btn {
-  display: inline-block;
-  padding: 15px 24px;
-  border-radius: 14px;
+.btn {
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 600;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 18px;
-  transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
 }
 
-.primary-btn {
-  background: #1e8f6d;
-  color: white;
-  box-shadow: 0 8px 20px rgba(30, 143, 109, 0.2);
+.btn.primary {
+  background: #0ea5e9;
 }
 
-.secondary-btn {
-  background: rgba(255, 255, 255, 0.92);
-  color: #1e8f6d;
-  border: 2px solid #1e8f6d;
+.btn.primary:hover {
+  background: #0284c7;
 }
 
-.primary-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 30px rgba(30, 143, 109, 0.3);
+.btn.secondary {
+  background: white;
+  color: #0369a1;
 }
 
-.secondary-btn:hover {
-  background: #1e8f6d;
-  color: white;
+.btn.secondary:hover {
+  background: #e5e7eb;
 }
 
-.hero-card {
-  background: rgba(255, 255, 255, 0.94);
-  border-radius: 28px;
-  padding: 32px;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
-  max-width: 520px;
-  justify-self: end;
+.features {
+  display: flex;
+  gap: 20px;
+  padding: 50px;
+  justify-content: center;
 }
 
-.hero-card h2 {
-  margin-bottom: 22px;
-  color: #14213d;
-  font-size: 36px;
+.feature-card {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  width: 250px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  text-align: center;
 }
 
-.hero-card p {
-  margin-bottom: 16px;
-  font-size: 21px;
-  color: #374151;
+.feature-card h3 {
+  margin-bottom: 10px;
 }
 
-.status {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 16px;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: bold;
+.hero {
+  height: 90vh;
+  background: url('/images/almaty-map.png') center/cover no-repeat;
+  position: relative;
 }
 
-.moderate {
-  background-color: #fef3c7;
-  color: #92400e;
-}
-
-@media (max-width: 1000px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-card {
-    justify-self: start;
-    max-width: 100%;
-  }
-
-  .hero-text h1 {
-    font-size: 64px;
-  }
-}
-
-@media (max-width: 640px) {
-  .home-page {
-    padding: 24px;
-  }
-
-  .hero-text h1 {
-    font-size: 48px;
-  }
-
-  .hero-text p {
-    font-size: 18px;
-  }
-
-  .hero-card h2 {
-    font-size: 28px;
-  }
-
-  .hero-card p {
-    font-size: 18px;
-  }
-
- 
-}
-
- .map-overlay {
-  background: rgba(244, 248, 251, 0.8);
-  
-}
-.hero-text {
-  animation: fadeUp 0.8s ease forwards;
-}
-
-.hero-card {
-  animation: fadeUp 1s ease forwards;
-}
-
-.hero-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hero-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}

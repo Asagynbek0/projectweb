@@ -1,36 +1,18 @@
 <section class="districts-page">
   <h1>Almaty Districts</h1>
-  <p class="subtitle">Current air quality status across the city</p>
 
-  @if (errorMessage) {
-  <p class="error-message">{{ errorMessage }}</p>
-}
+  <p *ngIf="isLoading">Loading stations...</p>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
 
-  <div class="district-grid">
-    @for (district of districts; track district.id) {
-      <div class="district-card" [routerLink]="['/districts', district.id]">
+  <div class="district-grid" *ngIf="!isLoading && districts.length > 0">
+    <div class="district-card" *ngFor="let district of districts">
+      <h2>{{ district.name }}</h2>
+      <p><strong>AQI:</strong> {{ district.aqi }}</p>
+      <p><strong>Status:</strong> {{ district.status }}</p>
 
-        <div class="aqi-bar"
-            [class.good]="district.status === 'Good'"
-            [class.moderate]="district.status === 'Moderate'"
-            [class.unhealthy]="district.status === 'Unhealthy'">
-        </div>
-        
-        <h2>{{ district.name }}</h2>
-        <p><strong>AQI:</strong> {{ district.aqi }}</p>
-        <p>
-          <strong>Status:</strong>
-          <span class="status" [class.good]="district.status === 'Good'"
-                [class.moderate]="district.status === 'Moderate'"
-                [class.unhealthy]="district.status === 'Unhealthy'">
-            {{ district.status }}
-          </span>
-        </p>
-
-        <<button [routerLink]="['/districts', district.id]">
-  View Details
-</button>
-      </div>
-    }
+      <button [routerLink]="['/districts', district.id]">
+        View Details
+      </button>
+    </div>
   </div>
 </section>

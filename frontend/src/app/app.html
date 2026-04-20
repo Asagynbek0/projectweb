@@ -8,6 +8,7 @@
 
     @if (!authService.isLoggedIn()) {
       <a routerLink="/login" routerLinkActive="active-link">Login</a>
+      <a routerLink="/register" routerLinkActive="active-link">Register</a>
     } @else {
       <button class="logout-btn" (click)="onLogout()">Logout</button>
     }

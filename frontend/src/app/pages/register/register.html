@@ -1,13 +1,9 @@
-<section class="login-page">
-  <div class="login-card">
-    <h1>Login</h1>
-    <p class="subtitle">Enter your account details</p>
+<section class="register-page">
+  <div class="register-card">
+    <h1>Create Account</h1>
+    <p class="subtitle">Register to access AirAlmaty services</p>
 
     <form (ngSubmit)="onSubmit()">
-      <p class="switch-link">
-            Don't have an account?
-          <a routerLink="/register">Register</a>
-      </p>
       <label for="username">Username</label>
       <input
         id="username"
@@ -17,7 +13,6 @@
         placeholder="Enter your username"
       />
 
-      
       <label for="email">Email</label>
       <input
         id="email"
@@ -46,8 +41,8 @@
       />
 
       <button type="submit" [disabled]="isLoading">
-        {{ isLoading ? 'Loading...' : 'Submit' }}
-        </button>
+        {{ isLoading ? 'Creating...' : 'Register' }}
+      </button>
     </form>
 
     @if (error) {
@@ -57,5 +52,10 @@
     @if (message) {
       <p class="success-message">{{ message }}</p>
     }
+
+    <p class="switch-link">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
   </div>
 </section>

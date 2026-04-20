@@ -1,19 +1,19 @@
-.login-page {
+.register-page {
   display: flex;
   justify-content: center;
   padding-top: 40px;
 }
 
-.login-card {
+.register-card {
   width: 100%;
-  max-width: 500px;
+  max-width: 520px;
   background: white;
   border-radius: 20px;
   padding: 32px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-.login-card h1 {
+.register-card h1 {
   font-size: 36px;
   color: #1e8f6d;
   margin-bottom: 8px;
@@ -63,6 +63,11 @@ button:hover {
   opacity: 0.9;
 }
 
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .error-message {
   margin-top: 16px;
   color: #b91c1c;
@@ -73,11 +78,6 @@ button:hover {
   margin-top: 16px;
   color: #166534;
   font-weight: bold;
-}
-
-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
 }
 
 .switch-link {

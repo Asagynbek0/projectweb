@@ -1,151 +1,152 @@
-.districts-page h1 {
-  font-size: 36px;
-  color: #1e8f6d;
+.districts-page {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.districts-header {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: inline-block;
   margin-bottom: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.districts-header h1 {
+  font-size: 44px;
+  color: #0f172a;
+  margin-bottom: 10px;
+  letter-spacing: -0.03em;
 }
 
 .subtitle {
   font-size: 18px;
-  color: #4b5563;
-  margin-bottom: 30px;
+  color: #64748b;
+}
+
+.loading-text,
+.error-text {
+  font-size: 16px;
+  margin: 18px 0;
+}
+
+.error-text {
+  color: #b91c1c;
+  font-weight: 600;
 }
 
 .district-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   gap: 24px;
 }
 
 .district-card {
   background: white;
+  border-radius: 24px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.district-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+}
+
+.aqi-bar {
+  height: 8px;
+  width: 100%;
+}
+
+.card-top,
+.aqi-box,
+.details-btn {
+  margin-left: 22px;
+  margin-right: 22px;
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 22px;
+  margin-bottom: 22px;
+}
+
+.card-top h2 {
+  font-size: 28px;
+  line-height: 1.15;
+  color: #0f172a;
+  margin: 0;
+}
+
+.status-pill {
+  white-space: nowrap;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.aqi-box {
+  background: #f8fafc;
   border-radius: 18px;
-  padding: 24px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 22px;
 }
 
-.district-card h2 {
-  margin-bottom: 14px;
-  color: #111827;
+.aqi-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 6px;
 }
 
-.district-card p {
-  margin-bottom: 12px;
-  font-size: 16px;
-  color: #374151;
+.aqi-value {
+  font-size: 40px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
 }
 
-.status {
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: bold;
+.details-btn {
+  margin-bottom: 22px;
+  width: calc(100% - 44px);
+  border: none;
+  border-radius: 16px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.details-btn:hover {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
 }
 
 .good {
-  background-color: #d1fae5;
-  color: #065f46;
+  background: #dcfce7;
+  color: #166534;
 }
 
 .moderate {
-  background-color: #fef3c7;
+  background: #fef3c7;
   color: #92400e;
 }
 
 .unhealthy {
-  background-color: #fee2e2;
+  background: #fee2e2;
   color: #991b1b;
-}
-
-button {
-  margin-top: 12px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 10px;
-  background-color: #1e8f6d;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-.error-message {
-  margin-bottom: 20px;
-  color: #b91c1c;
-  font-weight: bold;
-}
-
-.district-card {
-  background: white;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
-  overflow: hidden;
-}
-
-.district-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-}
-
-
-.aqi-bar {
-  height: 6px;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-
-.good {
-  background-color: #10b981;
-}
-
-.moderate {
-  background-color: #f59e0b;
-}
-
-.unhealthy {
-  background-color: #ef4444;
-}
-
-
-.status {
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: bold;
-  display: inline-block;
-  margin-left: 6px;
-}
-
-
-button {
-  margin-top: 14px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 10px;
-  background-color: #1e8f6d;
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-#district-map {
-  width: 100%;
-  height: 420px;
-  border-radius: 18px;
-  margin-bottom: 28px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }

@@ -1,30 +1,73 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ApiService, Reading } from '../../services/api';
 
 @Component({
   selector: 'app-district-detail',
-  imports: [RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './district-detail.html',
   styleUrl: './district-detail.css'
 })
-export class DistrictDetail {
-  districtId: number = 0;
+export class DistrictDetail implements OnInit {
+  stationId = 0;
+  stationName = '';
+  latestReading: Reading | null = null;
+  errorMessage = '';
+  isLoading = true;
 
-  districts = [
-    { id: 1, name: 'Almaly', aqi: 42, status: 'Good', recommendation: 'Great day for walking and outdoor sports.' },
-    { id: 2, name: 'Bostandyk', aqi: 76, status: 'Moderate', recommendation: 'Sensitive groups should limit long outdoor activity.' },
-    { id: 3, name: 'Medeu', aqi: 95, status: 'Moderate', recommendation: 'Consider reducing outdoor exercise time.' },
-    { id: 4, name: 'Turksib', aqi: 134, status: 'Unhealthy', recommendation: 'It is better to stay indoors and wear a mask outside.' },
-    { id: 5, name: 'Auezov', aqi: 88, status: 'Moderate', recommendation: 'Outdoor activity is okay, but avoid intense exercise.' },
-    { id: 6, name: 'Nauryzbay', aqi: 39, status: 'Good', recommendation: 'Air quality is good and safe for most people.' }
-  ];
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  selectedDistrict: any;
-
-  constructor(private route: ActivatedRoute) {
-    this.route.params.subscribe(params => {
-      this.districtId = Number(params['id']);
-      this.selectedDistrict = this.districts.find(d => d.id === this.districtId);
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.stationId = Number(params.get('id'));
+      this.loadStationDetails();
     });
+  }
+
+  loadStationDetails(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.latestReading = null;
+    this.stationName = '';
+
+    this.apiService.getReadingsByStation(this.stationId).subscribe({
+      next: (readings: Reading[]) => {
+        if (readings.length > 0) {
+          readings.sort(
+            (a, b) =>
+              new Date(a.recorded_at).getTime() - new Date(b.recorded_at).getTime()
+          );
+
+          this.latestReading = readings[readings.length - 1];
+          this.stationName = this.latestReading.station_name;
+        } else {
+          this.stationName = `Station ${this.stationId}`;
+          this.errorMessage = 'No readings found';
+        }
+
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.errorMessage = 'Error loading data';
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  mapCategoryToStatus(category: string | undefined): string {
+    if (!category) return 'Moderate';
+
+    const normalized = category.toLowerCase();
+
+    if (normalized === 'good') return 'Good';
+    if (normalized === 'moderate') return 'Moderate';
+    return 'Unhealthy';
   }
 }

@@ -140,3 +140,12 @@ button {
 button:hover {
   opacity: 0.9;
 }
+
+#district-map {
+  width: 100%;
+  height: 420px;
+  border-radius: 18px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}

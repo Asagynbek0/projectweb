@@ -1,24 +1,15 @@
-@if (selectedDistrict) {
-  <section class="detail-page">
-    <div class="detail-card">
-      <h1>{{ selectedDistrict.name }} District</h1>
+<section>
+  <a routerLink="/districts">← Back</a>
 
-      <p><strong>AQI:</strong> {{ selectedDistrict.aqi }}</p>
-      <p>
-        <strong>Status:</strong>
-        <span class="status"
-              [class.good]="selectedDistrict.status === 'Good'"
-              [class.moderate]="selectedDistrict.status === 'Moderate'"
-              [class.unhealthy]="selectedDistrict.status === 'Unhealthy'">
-          {{ selectedDistrict.status }}
-        </span>
-      </p>
+  <p *ngIf="isLoading">Loading...</p>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
 
-      <p><strong>Recommendation:</strong> {{ selectedDistrict.recommendation }}</p>
-
-      <a routerLink="/districts" class="back-link">← Back to Districts</a>
-    </div>
-  </section>
-} @else {
-  <p>District not found.</p>
-}
+  <div *ngIf="latestReading">
+    <h1>{{ stationName }}</h1>
+    <p><strong>AQI:</strong> {{ latestReading.aqi }}</p>
+    <p><strong>PM2.5:</strong> {{ latestReading.pm25 ?? '—' }}</p>
+    <p><strong>PM10:</strong> {{ latestReading.pm10 ?? '—' }}</p>
+    <p><strong>NO2:</strong> {{ latestReading.no2 ?? '—' }}</p>
+    <p><strong>CO:</strong> {{ latestReading.co ?? '—' }}</p>
+  </div>
+</section>

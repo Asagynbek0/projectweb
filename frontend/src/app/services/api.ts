@@ -10,6 +10,22 @@ export interface Station {
   district?: string;
 }
 
+export interface Reading {
+  id: number;
+  station: number;
+  station_name: string;
+  aqi: number;
+  pm25: number | null;
+  pm10: number | null;
+  no2: number | null;
+  o3: number | null;
+  co: number | null;
+  category: string;
+  recorded_at: string;
+  source?: string;
+}
+
+
 export interface LoginData {
   username: string;
   password: string;
@@ -35,6 +51,10 @@ export class ApiService {
 
   getReadings(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/readings/`);
+  }
+
+  getReadingsByStation(stationId: number): Observable<Reading[]> {
+  return this.http.get<Reading[]>(`${this.baseUrl}/readings/?station=${stationId}`);
   }
 
   getAirSummary(): Observable<any> {

@@ -1,51 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { ApiService, Station } from '../../services/api';
 
 @Component({
   selector: 'app-districts',
-  imports: [RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './districts.html',
   styleUrl: './districts.css'
 })
 export class Districts implements OnInit {
   districts: any[] = [];
+  errorMessage = '';
+  isLoading = true;
 
-  errorMessage: string = '';
-  isLoading: boolean = true;
-
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.apiService.getStations().subscribe({
-      next: (data) => {
-        console.log('Stations from API:', data);
+    this.isLoading = true;
 
-        this.districts = data.map((station: Station, index: number) => ({
-          id: station.id,
-          name: station.name || `Station ${index + 1}`,
-          aqi: station.aqi ?? 75,
-          status: station.status ?? 'Moderate'
-        }));
+    forkJoin({
+      stations: this.apiService.getStations(),
+      summary: this.apiService.getAirSummary()
+    }).subscribe({
+      next: ({ stations, summary }) => {
+        console.log('Stations:', stations);
+        console.log('Summary:', summary);
+
+        this.districts = stations.map((station: Station) => {
+          const summaryItem = summary.find(
+            (item: any) => item.station_name === station.name
+          );
+
+          return {
+            id: station.id,
+            name: station.name,
+            aqi: summaryItem?.latest_aqi ?? 0,
+            status: this.mapCategoryToStatus(summaryItem?.category)
+          };
+        });
 
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('API error:', error);
-
-        this.errorMessage = 'Could not load stations from API. Showing local data instead.';
-
-        this.districts = [
-          { id: 1, name: 'Almaly', aqi: 42, status: 'Good' },
-          { id: 2, name: 'Bostandyk', aqi: 76, status: 'Moderate' },
-          { id: 3, name: 'Medeu', aqi: 95, status: 'Moderate' },
-          { id: 4, name: 'Turksib', aqi: 134, status: 'Unhealthy' },
-          { id: 5, name: 'Auezov', aqi: 88, status: 'Moderate' },
-          { id: 6, name: 'Nauryzbay', aqi: 39, status: 'Good' }
-        ];
-
+        this.errorMessage = 'Failed to load stations.';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
+  }
+
+  mapCategoryToStatus(category: string | undefined): string {
+    if (!category) return 'Moderate';
+
+    const normalized = category.toLowerCase();
+
+    if (normalized === 'good') return 'Good';
+    if (normalized === 'moderate') return 'Moderate';
+    return 'Unhealthy';
   }
 }

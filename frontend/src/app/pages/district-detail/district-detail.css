@@ -1,0 +1,56 @@
+.detail-page {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+.detail-card {
+  width: 100%;
+  max-width: 700px;
+  background: white;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.detail-card h1 {
+  margin-bottom: 20px;
+  color: #1e8f6d;
+  font-size: 36px;
+}
+
+.detail-card p {
+  margin-bottom: 16px;
+  font-size: 18px;
+  color: #374151;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.good {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.moderate {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.unhealthy {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #1e8f6d;
+  font-weight: bold;
+}

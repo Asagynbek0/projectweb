@@ -1,1 +1,44 @@
-<p>dashboard works!</p>
+<section class="dashboard-page">
+  <div class="dashboard-header">
+    <h1>Air Quality Dashboard</h1>
+    <p>Overview of pollution levels and environmental trends in Almaty</p>
+  </div>
+
+  <div class="summary-grid">
+    @for (card of summaryCards; track card.title) {
+      <div class="summary-card">
+        <h3>{{ card.title }}</h3>
+        <h2>{{ card.value }}</h2>
+        <span class="badge"
+              [class.good]="card.status === 'Good'"
+              [class.moderate]="card.status === 'Moderate'"
+              [class.unhealthy]="card.status === 'Unhealthy'"
+              [class.live]="card.status === 'Live'">
+          {{ card.status }}
+        </span>
+      </div>
+    }
+  </div>
+
+  <div class="dashboard-content">
+    <div class="panel">
+      <h2>Pollution Trends</h2>
+      <div class="trend-list">
+        @for (trend of trends; track trend.period) {
+          <div class="trend-item">
+            <span>{{ trend.period }}</span>
+            <strong>{{ trend.value }}</strong>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Daily Recommendation</h2>
+      <p>
+        Air quality is currently moderate. Outdoor activity is acceptable for most people,
+        but sensitive groups should avoid long exposure during peak traffic hours.
+      </p>
+    </div>
+  </div>
+</section>

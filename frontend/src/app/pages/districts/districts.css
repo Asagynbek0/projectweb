@@ -70,3 +70,73 @@ button {
 button:hover {
   opacity: 0.9;
 }
+
+.error-message {
+  margin-bottom: 20px;
+  color: #b91c1c;
+  font-weight: bold;
+}
+
+.district-card {
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.district-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+
+.aqi-bar {
+  height: 6px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+.good {
+  background-color: #10b981;
+}
+
+.moderate {
+  background-color: #f59e0b;
+}
+
+.unhealthy {
+  background-color: #ef4444;
+}
+
+
+.status {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+
+button {
+  margin-top: 14px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #1e8f6d;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}

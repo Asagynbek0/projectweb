@@ -1,0 +1,24 @@
+@if (selectedDistrict) {
+  <section class="detail-page">
+    <div class="detail-card">
+      <h1>{{ selectedDistrict.name }} District</h1>
+
+      <p><strong>AQI:</strong> {{ selectedDistrict.aqi }}</p>
+      <p>
+        <strong>Status:</strong>
+        <span class="status"
+              [class.good]="selectedDistrict.status === 'Good'"
+              [class.moderate]="selectedDistrict.status === 'Moderate'"
+              [class.unhealthy]="selectedDistrict.status === 'Unhealthy'">
+          {{ selectedDistrict.status }}
+        </span>
+      </p>
+
+      <p><strong>Recommendation:</strong> {{ selectedDistrict.recommendation }}</p>
+
+      <a routerLink="/districts" class="back-link">← Back to Districts</a>
+    </div>
+  </section>
+} @else {
+  <p>District not found.</p>
+}

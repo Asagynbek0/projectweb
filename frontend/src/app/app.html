@@ -1,11 +1,16 @@
 <nav class="navbar">
-  <div class="logo">AirAlmaty</div>
+  <a routerLink="/home" class="logo">AirAlmaty</a>
 
   <div class="nav-links">
-    <a routerLink="/home">Home</a>
-    <a routerLink="/districts">Districts</a>
-    <a routerLink="/dashboard">Dashboard</a>
-    <a routerLink="/login">Login</a>
+    <a routerLink="/home" routerLinkActive="active-link">Home</a>
+    <a routerLink="/districts" routerLinkActive="active-link">Districts</a>
+    <a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
+
+    @if (!authService.isLoggedIn()) {
+      <a routerLink="/login" routerLinkActive="active-link">Login</a>
+    } @else {
+      <button class="logout-btn" (click)="onLogout()">Logout</button>
+    }
   </div>
 </nav>
 

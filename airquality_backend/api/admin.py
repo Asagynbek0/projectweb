@@ -6,6 +6,7 @@ from .models import UserProfile, Station, AirQualityReading, NewsPost, Comment
 class StationAdmin(admin.ModelAdmin):
     list_display = ['name', 'city', 'is_active', 'openaq_location_id']
     list_filter = ['is_active', 'city']
+    fields = ['name', 'city', 'latitude', 'longitude', 'openaq_location_id', 'is_active']
 
 
 @admin.register(AirQualityReading)
@@ -19,7 +20,7 @@ class AirQualityReadingAdmin(admin.ModelAdmin):
 class NewsPostAdmin(admin.ModelAdmin):
     list_display = ['title', 'author', 'is_published', 'created_at']
     list_filter = ['is_published']
-    prepopulated_fields = {'slug': ('title',)}
+    exclude = ['slug']
 
 
 @admin.register(Comment)

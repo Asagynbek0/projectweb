@@ -2,8 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface Station {
+  id: number;
+  name: string;
+  aqi?: number;
+  status?: string;
+  district?: string;
+}
+
 export interface LoginData {
   username: string;
+  password: string;
+}
+
+export interface RegisterData {
+  username: string;
+  email: string;
   password: string;
 }
 
@@ -15,15 +29,31 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getDistricts(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/districts/`);
+  getStations(): Observable<Station[]> {
+    return this.http.get<Station[]>(`${this.baseUrl}/stations/`);
   }
 
-  getDistrictById(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/districts/${id}/`);
+  getReadings(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/readings/`);
+  }
+
+  getAirSummary(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/air-summary/`);
   }
 
   login(data: LoginData): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login/`, data);
+    return this.http.post(`${this.baseUrl}/auth/login/`, data);
+  }
+
+  register(data: RegisterData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/register/`, data);
+  }
+
+  logout(): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/logout/`, {});
+  }
+
+  getProfile(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/auth/me/`);
   }
 }

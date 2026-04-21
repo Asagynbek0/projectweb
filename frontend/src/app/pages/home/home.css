@@ -1,90 +1,192 @@
 .home-page {
-  min-height: calc(100vh - 70px);
+  position: relative;
+  min-height: calc(100vh - 78px);
   display: flex;
   align-items: center;
+  padding: 40px;
+  background-image: url('/images/almaty-map.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  filter: saturate(0.8);
+}
+
+
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(244, 248, 251, 0.78);
+  backdrop-filter: blur(1px);
+  z-index: 1;
 }
 
 .hero {
+  position: relative;
+  z-index: 2;
   width: 100%;
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 32px;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 40px;
   align-items: center;
 }
 
 .hero-text h1 {
-  font-size: 64px;
+  font-size: 84px;
   color: #1e8f6d;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  line-height: 1;
 }
 
 .hero-text p {
-  font-size: 20px;
-  line-height: 1.6;
-  color: #374151;
-  max-width: 700px;
-  margin-bottom: 28px;
+  font-size: 22px;
+  line-height: 1.7;
+  color: #24324a;
+  max-width: 720px;
+  margin-bottom: 30px;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 16px;
+  gap: 18px;
+  flex-wrap: wrap;
 }
 
 .primary-btn,
 .secondary-btn {
   display: inline-block;
-  padding: 14px 22px;
-  border-radius: 12px;
+  padding: 15px 24px;
+  border-radius: 14px;
   text-decoration: none;
-  font-weight: bold;
-  transition: 0.2s;
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
 }
 
 .primary-btn {
   background: #1e8f6d;
   color: white;
+  box-shadow: 0 8px 20px rgba(30, 143, 109, 0.2);
 }
 
 .secondary-btn {
-  background: white;
+  background: rgba(255, 255, 255, 0.92);
   color: #1e8f6d;
   border: 2px solid #1e8f6d;
 }
 
-.primary-btn:hover,
+.primary-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(30, 143, 109, 0.3);
+}
+
 .secondary-btn:hover {
-  opacity: 0.9;
+  background: #1e8f6d;
+  color: white;
 }
 
 .hero-card {
-  background: white;
-  border-radius: 24px;
-  padding: 28px;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  max-width: 520px;
+  justify-self: end;
 }
 
 .hero-card h2 {
-  margin-bottom: 18px;
-  color: #111827;
+  margin-bottom: 22px;
+  color: #14213d;
+  font-size: 36px;
 }
 
 .hero-card p {
-  margin-bottom: 14px;
-  font-size: 17px;
+  margin-bottom: 16px;
+  font-size: 21px;
   color: #374151;
 }
 
 .status {
   display: inline-block;
   margin-top: 10px;
-  padding: 8px 14px;
-  border-radius: 12px;
-  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 14px;
+  font-size: 15px;
   font-weight: bold;
 }
 
 .moderate {
   background-color: #fef3c7;
   color: #92400e;
+}
+
+@media (max-width: 1000px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card {
+    justify-self: start;
+    max-width: 100%;
+  }
+
+  .hero-text h1 {
+    font-size: 64px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-page {
+    padding: 24px;
+  }
+
+  .hero-text h1 {
+    font-size: 48px;
+  }
+
+  .hero-text p {
+    font-size: 18px;
+  }
+
+  .hero-card h2 {
+    font-size: 28px;
+  }
+
+  .hero-card p {
+    font-size: 18px;
+  }
+
+ 
+}
+
+ .map-overlay {
+  background: rgba(244, 248, 251, 0.8);
+  
+}
+.hero-text {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.hero-card {
+  animation: fadeUp 1s ease forwards;
+}
+
+.hero-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -2,15 +2,14 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api';
-import { AuthService } from '../../services/auth';
 
 @Component({
-  selector: 'app-login',
- imports: [FormsModule, RouterLink],
-  templateUrl: './login.html',
-  styleUrl: './login.css'
+  selector: 'app-register',
+  imports: [FormsModule, RouterLink],
+  templateUrl: './register.html',
+  styleUrl: './register.css'
 })
-export class Login {
+export class Register {
   username: string = '';
   email: string = '';
   password: string = '';
@@ -22,7 +21,6 @@ export class Login {
 
   constructor(
     private apiService: ApiService,
-    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -30,8 +28,8 @@ export class Login {
     this.message = '';
     this.error = '';
 
-    if (!this.username || !this.password) {
-      this.error = 'Username and password are required.';
+    if (!this.username || !this.email || !this.password || !this.confirmPassword) {
+      this.error = 'Please fill in all fields.';
       return;
     }
 
@@ -42,27 +40,23 @@ export class Login {
 
     this.isLoading = true;
 
-    this.apiService.login({
+    this.apiService.register({
       username: this.username,
+      email: this.email,
       password: this.password
     }).subscribe({
       next: (response) => {
         this.isLoading = false;
-
-        const token = response.token || response.access || response.access_token;
-
-        if (token) {
-          this.authService.setToken(token);
-          this.message = 'Login successful!';
-          this.router.navigate(['/home']);
-        } else {
-          this.error = 'Token was not returned by the server.';
-        }
+        console.log('Register response:', response);
+        this.message = 'Registration successful! You can now log in.';
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1200);
       },
       error: (error) => {
         this.isLoading = false;
-        console.error('Login error:', error);
-        this.error = 'Login failed. Please check your credentials.';
+        console.error('Register error:', error);
+        this.error = 'Registration failed. Please check your data.';
       }
     });
   }

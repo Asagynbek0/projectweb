@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
+import * as L from 'leaflet';
 import { ApiService, Reading, Station } from '../../services/api';
 
 interface DashboardDistrict {
@@ -14,11 +15,12 @@ interface DashboardDistrict {
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css'
+  styleUrls: ['./dashboard.css']
 })
-export class Dashboard implements OnInit {
+export class Dashboard implements OnInit, AfterViewInit {
   isLoading = true;
   errorMessage = '';
 
@@ -34,15 +36,19 @@ export class Dashboard implements OnInit {
   weekAqi = 0;
   monthAqi = 0;
 
-  private minLat = 43.15;
-  private maxLat = 43.37;
-  private minLng = 76.78;
-  private maxLng = 77.05;
+  private map: L.Map | null = null;
+  private markersLayer: L.LayerGroup | null = null;
+  private viewReady = false;
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
     this.loadDashboardData();
+  }
+
+  ngAfterViewInit(): void {
+    this.viewReady = true;
+    this.tryRenderMap();
   }
 
   loadDashboardData(): void {
@@ -55,12 +61,9 @@ export class Dashboard implements OnInit {
       readings: this.apiService.getReadings()
     }).subscribe({
       next: ({ stations, summary, readings }) => {
-        console.log('Dashboard stations:', stations);
-        console.log('Dashboard summary:', summary);
-        console.log('Dashboard readings:', readings);
-
         this.buildDashboard(stations ?? [], summary ?? [], readings ?? []);
         this.isLoading = false;
+        this.tryRenderMap();
       },
       error: (error) => {
         console.error('Dashboard API error:', error);
@@ -96,7 +99,11 @@ export class Dashboard implements OnInit {
     });
 
     this.mapDistricts = this.districts.filter(
-      (d) => d.latitude !== null && d.longitude !== null
+      (d) =>
+        d.latitude !== null &&
+        d.longitude !== null &&
+        !isNaN(d.latitude) &&
+        !isNaN(d.longitude)
     );
 
     this.activeStations = this.districts.length;
@@ -132,7 +139,11 @@ export class Dashboard implements OnInit {
 
     if (filtered.length === 0) return 0;
 
-    const total = filtered.reduce((sum, reading) => sum + Number(reading.aqi ?? 0), 0);
+    const total = filtered.reduce(
+      (sum, reading) => sum + Number(reading.aqi ?? 0),
+      0
+    );
+
     return Math.round(total / filtered.length);
   }
 
@@ -146,27 +157,87 @@ export class Dashboard implements OnInit {
     return 'Unhealthy';
   }
 
-  getMarkerClass(status: string): string {
-    if (status === 'Good') return 'marker-good';
-    if (status === 'Moderate') return 'marker-moderate';
-    return 'marker-unhealthy';
-  }
-
   getBadgeClass(status: string): string {
     if (status === 'Good') return 'good';
     if (status === 'Moderate') return 'moderate';
     return 'unhealthy';
   }
 
-  getMarkerLeft(lng: number | null): string {
-    if (lng === null) return '50%';
-    const percent = ((lng - this.minLng) / (this.maxLng - this.minLng)) * 100;
-    return `${Math.min(Math.max(percent, 6), 94)}%`;
+  private tryRenderMap(): void {
+    if (!this.viewReady || this.isLoading) return;
+
+    setTimeout(() => {
+      this.initMap();
+      this.renderMarkers();
+      this.map?.invalidateSize();
+    }, 300);
   }
 
-  getMarkerTop(lat: number | null): string {
-    if (lat === null) return '50%';
-    const percent = ((this.maxLat - lat) / (this.maxLat - this.minLat)) * 100;
-    return `${Math.min(Math.max(percent, 8), 92)}%`;
+  private initMap(): void {
+    const mapElement = document.getElementById('dashboard-map');
+    if (!mapElement) return;
+
+    if (this.map) {
+      this.map.invalidateSize();
+      return;
+    }
+
+    this.map = L.map(mapElement).setView([43.238949, 76.889709], 11);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(this.map);
+
+    this.markersLayer = L.layerGroup().addTo(this.map);
+  }
+
+  private renderMarkers(): void {
+    if (!this.map || !this.markersLayer) return;
+
+    this.markersLayer.clearLayers();
+
+    if (this.mapDistricts.length === 0) {
+      this.map.setView([43.238949, 76.889709], 11);
+      return;
+    }
+
+    const bounds: L.LatLngTuple[] = [];
+
+    this.mapDistricts.forEach((district) => {
+      if (district.latitude === null || district.longitude === null) return;
+
+      const latlng: L.LatLngTuple = [district.latitude, district.longitude];
+
+      const marker = L.circleMarker(latlng, {
+        radius: 14,
+        fillColor: this.getMarkerColor(district.status),
+        color: '#ffffff',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.9
+      });
+
+      marker.bindPopup(`
+        <div style="min-width: 140px">
+          <strong>${district.name}</strong><br>
+          AQI: ${district.aqi}<br>
+          Status: ${district.status}
+        </div>
+      `);
+
+      marker.addTo(this.markersLayer!);
+      bounds.push(latlng);
+    });
+
+    if (bounds.length > 0) {
+      this.map.fitBounds(bounds, { padding: [30, 30] });
+    }
+  }
+
+  private getMarkerColor(status: string): string {
+    if (status === 'Good') return '#22c55e';
+    if (status === 'Moderate') return '#f59e0b';
+    return '#ef4444';
   }
 }

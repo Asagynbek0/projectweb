@@ -3,31 +3,6 @@
   <p *ngIf="errorMessage" class="error-text">{{ errorMessage }}</p>
 
   <ng-container *ngIf="!isLoading && !errorMessage">
-    <div class="dashboard-hero">
-      <div class="dashboard-intro">
-        <span class="hero-badge">Monitoring Overview</span>
-        <h1>Air Quality Dashboard</h1>
-        <p>
-          Overview of pollution levels, district conditions, and daily
-          environmental insights across Almaty.
-        </p>
-      </div>
-
-      <div class="hero-summary">
-        <div class="summary-card">
-          <span class="summary-label">Average AQI</span>
-          <strong>{{ averageAqi }}</strong>
-          <span class="summary-status moderate">Live city average</span>
-        </div>
-
-        <div class="summary-card">
-          <span class="summary-label">Active Stations</span>
-          <strong>{{ activeStations }}</strong>
-          <span class="summary-status live">Online now</span>
-        </div>
-      </div>
-    </div>
-
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-top">
@@ -36,10 +11,7 @@
         </div>
         <h2>{{ averageAqi }}</h2>
         <div class="progress">
-          <div
-            class="progress-bar moderate"
-            [style.width.%]="averageAqi > 100 ? 100 : averageAqi"
-          ></div>
+          <div class="progress-bar moderate" [style.width.%]="averageAqi > 100 ? 100 : averageAqi"></div>
         </div>
       </div>
 
@@ -67,10 +39,10 @@
 
       <div class="stat-card">
         <div class="stat-top">
-          <span>Best Time Outside</span>
-          <span class="badge live">Today</span>
+          <span>Active Stations</span>
+          <span class="badge live">Live</span>
         </div>
-        <h2>Morning</h2>
+        <h2>{{ activeStations }}</h2>
         <div class="progress">
           <div class="progress-bar live" style="width: 75%"></div>
         </div>
@@ -86,24 +58,7 @@
             <span *ngIf="mapDistricts.length === 0">No coordinates available</span>
           </div>
 
-          <div class="map-box">
-            <img src="/images/almaty-map.png" alt="Almaty map" />
-
-            <div
-              class="map-marker"
-              *ngFor="let district of mapDistricts"
-              [ngClass]="getMarkerClass(district.status)"
-              [style.left]="getMarkerLeft(district.longitude)"
-              [style.top]="getMarkerTop(district.latitude)"
-              [title]="district.name + ' - AQI ' + district.aqi"
-            >
-              {{ district.aqi }}
-            </div>
-
-            <div *ngIf="mapDistricts.length === 0" class="map-empty">
-              Coordinates are missing in backend data.
-            </div>
-          </div>
+          <div id="dashboard-map" class="real-map"></div>
         </div>
 
         <div class="panel-card">
@@ -117,12 +72,10 @@
               <span>Today</span>
               <strong>{{ todayAqi }} AQI</strong>
             </div>
-
             <div class="trend-row">
               <span>This Week</span>
               <strong>{{ weekAqi }} AQI</strong>
             </div>
-
             <div class="trend-row">
               <span>This Month</span>
               <strong>{{ monthAqi }} AQI</strong>
@@ -149,21 +102,6 @@
                 {{ district.status }}
               </span>
             </div>
-          </div>
-        </div>
-
-        <div class="panel-card">
-          <div class="panel-header">
-            <h3>Daily Recommendation</h3>
-          </div>
-
-          <p class="recommendation-text">
-            Check the cleanest districts first and limit long outdoor activity
-            in higher AQI zones during the afternoon.
-          </p>
-
-          <div class="tip-box">
-            Best time: <strong>Morning</strong>
           </div>
         </div>
       </div>

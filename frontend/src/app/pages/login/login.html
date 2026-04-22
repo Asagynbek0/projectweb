@@ -1,61 +1,60 @@
-<section class="login-page">
-  <div class="login-card">
-    <h1>Login</h1>
-    <p class="subtitle">Enter your account details</p>
-
-    <form (ngSubmit)="onSubmit()">
-      <p class="switch-link">
-            Don't have an account?
-          <a routerLink="/register">Register</a>
+<section class="auth-page">
+  <div class="auth-shell">
+    <div class="auth-info">
+      <span class="auth-badge">Secure Access</span>
+      <h1>Login to AirAlmaty</h1>
+      <p>
+        Access district monitoring, detailed environmental readings, and the
+        city dashboard in one place.
       </p>
-      <label for="username">Username</label>
-      <input
-        id="username"
-        type="text"
-        name="username"
-        [(ngModel)]="username"
-        placeholder="Enter your username"
-      />
+    </div>
 
-      
-      <label for="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        [(ngModel)]="email"
-        placeholder="Enter your email"
-      />
+    <div class="auth-card">
+      <h2>Welcome back</h2>
+      <p class="auth-subtitle">Sign in to continue</p>
 
-      <label for="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        name="password"
-        [(ngModel)]="password"
-        placeholder="Enter your password"
-      />
+      <form #loginForm="ngForm" class="auth-form" (ngSubmit)="onSubmit(loginForm)" novalidate>
+        <div class="form-group">
+          <label for="login-username">Username</label>
+          <input
+            id="login-username"
+            name="username"
+            type="text"
+            placeholder="Enter your username"
+            [(ngModel)]="loginData.username"
+            #username="ngModel"
+            required
+          />
 
-      <label for="confirmPassword">Confirm Password</label>
-      <input
-        id="confirmPassword"
-        type="password"
-        name="confirmPassword"
-        [(ngModel)]="confirmPassword"
-        placeholder="Confirm your password"
-      />
+          <small class="error-message" *ngIf="username.invalid && username.touched">
+            Username is required.
+          </small>
+        </div>
 
-      <button type="submit" [disabled]="isLoading">
-        {{ isLoading ? 'Loading...' : 'Submit' }}
-        </button>
-    </form>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input
+            id="login-password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            [(ngModel)]="loginData.password"
+            #password="ngModel"
+            required
+            minlength="6"
+          />
 
-    @if (error) {
-      <p class="error-message">{{ error }}</p>
-    }
+          <small class="error-message" *ngIf="password.errors?.['required'] && password.touched">
+            Password is required.
+          </small>
 
-    @if (message) {
-      <p class="success-message">{{ message }}</p>
-    }
+          <small class="error-message" *ngIf="password.errors?.['minlength'] && password.touched">
+            Password must be at least 6 characters.
+          </small>
+        </div>
+
+        <button type="submit" class="auth-btn">Login</button>
+      </form>
+    </div>
   </div>
 </section>

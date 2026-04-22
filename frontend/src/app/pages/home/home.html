@@ -1,32 +1,78 @@
-<section class="hero">
-  <div class="overlay">
-    <div class="hero-content">
+<section class="home-page">
+  <div class="home-hero">
+    <div class="hero-left">
+      <div class="hero-badge">Air Quality Monitoring Platform</div>
+
       <h1>Monitor Air Quality in Almaty</h1>
-      <p>
-        Real-time air pollution data across districts. Stay informed and protect your health.
+
+      <p class="hero-text">
+        Real-time district monitoring, clean environmental insights, and a
+        modern dashboard for understanding pollution across the city.
       </p>
 
-      <div class="hero-buttons">
-        <a routerLink="/districts" class="btn primary">View Districts</a>
-        <a routerLink="/dashboard" class="btn secondary">Open Dashboard</a>
+      <div class="hero-actions">
+        <a routerLink="/districts" class="btn-primary">View Districts</a>
+        <a routerLink="/dashboard" class="btn-secondary">Open Dashboard</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-panel">
+        <div class="panel-label">Today Overview</div>
+        <div class="panel-value">78 AQI</div>
+        <div class="panel-status">Moderate air quality across the city</div>
+      </div>
+
+      <div class="hero-mini-grid">
+        <div class="mini-card">
+          <span class="mini-label">Safest District</span>
+          <strong>Nauryzbay</strong>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-label">Most Polluted</span>
+          <strong>Turksib</strong>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-label">Active Stations</span>
+          <strong>8 Live</strong>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-label">Best Time Outside</span>
+          <strong>Morning</strong>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<section class="features">
-  <div class="feature-card">
-    <h3>Real-time Monitoring</h3>
-    <p>Live AQI updates from multiple stations.</p>
-  </div>
+  <div class="home-features">
+    <div class="feature-card">
+      <div class="feature-kicker">Districts</div>
+      <h3>Track live district conditions</h3>
+      <p>
+        View current AQI status for each district and quickly compare cleaner
+        and more polluted areas.
+      </p>
+    </div>
 
-  <div class="feature-card">
-    <h3>District Insights</h3>
-    <p>Compare air quality across different areas.</p>
-  </div>
+    <div class="feature-card">
+      <div class="feature-kicker">Dashboard</div>
+      <h3>See trends and insights</h3>
+      <p>
+        Review overall air conditions, key metrics, and environmental summaries
+        in one place.
+      </p>
+    </div>
 
-  <div class="feature-card">
-    <h3>Health Awareness</h3>
-    <p>Understand pollution levels and risks.</p>
+    <div class="feature-card">
+      <div class="feature-kicker">Details</div>
+      <h3>Open district-level readings</h3>
+      <p>
+        Check AQI and pollutant values for each district with a clear,
+        structured presentation.
+      </p>
+    </div>
   </div>
 </section>

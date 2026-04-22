@@ -1,35 +1,76 @@
 <section class="districts-page">
-  <h1>Almaty Districts</h1>
-  <p class="subtitle">Current air quality status across the city.</p>
+  <div class="districts-hero">
+    <div class="districts-intro">
+      <span class="hero-badge">District Monitoring</span>
+      <h1>Almaty Districts</h1>
+      <p>
+        Current air quality status across the city. Search districts, filter by
+        status, and open detailed readings.
+      </p>
+    </div>
 
-  <p *ngIf="isLoading">Loading stations...</p>
-  <p *ngIf="errorMessage">{{ errorMessage }}</p>
-
-  <div class="district-grid" *ngIf="!isLoading && districts.length > 0">
-    <div
-      class="district-card"
-      *ngFor="let district of districts"
-      [routerLink]="['/districts', district.id]"
-    >
-      <h2>{{ district.name }}</h2>
-
-      <div class="aqi-box">
-        <p>AQI</p>
-        <div class="aqi-value">{{ district.aqi }}</div>
+    <div class="districts-controls-card">
+      <div class="control-group">
+        <label for="search">Search district</label>
+        <input
+          id="search"
+          type="text"
+          placeholder="Enter district name"
+          [(ngModel)]="searchTerm"
+          (input)="applyFilters()"
+        />
       </div>
 
-      <p>
+      <div class="control-group">
+        <label for="status">Filter by status</label>
+        <select
+          id="status"
+          [(ngModel)]="selectedStatus"
+          (change)="applyFilters()"
+        >
+          <option value="All">All Status</option>
+          <option value="Good">Good</option>
+          <option value="Moderate">Moderate</option>
+          <option value="Unhealthy">Unhealthy</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="isLoading" class="info-text">Loading stations...</p>
+  <p *ngIf="errorMessage" class="error-text">{{ errorMessage }}</p>
+
+  <div class="district-grid" *ngIf="!isLoading && filteredDistricts.length > 0">
+    <div
+      class="district-card"
+      *ngFor="let district of filteredDistricts"
+      [routerLink]="['/districts', district.id]"
+    >
+      <div class="card-top">
+        <h2>{{ district.name }}</h2>
+
         <span
-          class="status"
+          class="status-badge"
           [class.good]="district.status === 'Good'"
           [class.moderate]="district.status === 'Moderate'"
           [class.unhealthy]="district.status === 'Unhealthy'"
         >
           {{ district.status }}
         </span>
-      </p>
+      </div>
 
-      <button type="button">View Details</button>
+      <div class="aqi-panel">
+        <span class="aqi-label">AQI</span>
+        <strong class="aqi-value">{{ district.aqi }}</strong>
+      </div>
+
+      <div class="district-footer">
+        <button type="button">View Details</button>
+      </div>
     </div>
   </div>
+
+  <p *ngIf="!isLoading && filteredDistricts.length === 0" class="info-text">
+    No districts found.
+  </p>
 </section>

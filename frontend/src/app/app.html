@@ -5,11 +5,16 @@
     <a routerLink="/home" routerLinkActive="active-link">Home</a>
     <a routerLink="/districts" routerLinkActive="active-link">Districts</a>
     <a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
-    <a routerLink="/login" routerLinkActive="active-link">Login</a>
+  </div>
+
+  <div class="nav-actions">
+    <a routerLink="/login" class="login-btn">Login</a>
     <a routerLink="/register" class="register-btn">Register</a>
   </div>
 </nav>
 
-<main class="page-shell">
-  <router-outlet></router-outlet>
-</main>
+<div class="page-shell">
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

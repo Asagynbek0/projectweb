@@ -1,61 +1,82 @@
-<section class="register-page">
-  <div class="register-card">
-    <h1>Create Account</h1>
-    <p class="subtitle">Register to access AirAlmaty services</p>
+<section class="auth-page">
+  <div class="auth-shell">
+    <div class="auth-info">
+      <span class="auth-badge">Create Account</span>
+      <h1>Register in AirAlmaty</h1>
+      <p>
+        Create an account to access monitoring tools, district data, and the
+        environmental dashboard.
+      </p>
+    </div>
 
-    <form (ngSubmit)="onSubmit()">
-      <label for="username">Username</label>
-      <input
-        id="username"
-        type="text"
-        name="username"
-        [(ngModel)]="username"
-        placeholder="Enter your username"
-      />
+    <div class="auth-card">
+      <h2>Get started</h2>
+      <p class="auth-subtitle">Create your new account</p>
 
-      <label for="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        [(ngModel)]="email"
-        placeholder="Enter your email"
-      />
+      <form #registerForm="ngForm" class="auth-form" (ngSubmit)="onSubmit(registerForm)" novalidate>
+        <div class="form-group">
+          <label for="register-username">Username</label>
+          <input
+            id="register-username"
+            name="username"
+            type="text"
+            placeholder="Choose a username"
+            [(ngModel)]="registerData.username"
+            #username="ngModel"
+            required
+          />
 
-      <label for="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        name="password"
-        [(ngModel)]="password"
-        placeholder="Enter your password"
-      />
+          <small class="error-message" *ngIf="username.invalid && username.touched">
+            Username is required.
+          </small>
+        </div>
 
-      <label for="confirmPassword">Confirm Password</label>
-      <input
-        id="confirmPassword"
-        type="password"
-        name="confirmPassword"
-        [(ngModel)]="confirmPassword"
-        placeholder="Confirm your password"
-      />
+        <div class="form-group">
+          <label for="register-email">Email</label>
+          <input
+            id="register-email"
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            [(ngModel)]="registerData.email"
+            #email="ngModel"
+            required
+            email
+          />
 
-      <button type="submit" [disabled]="isLoading">
-        {{ isLoading ? 'Creating...' : 'Register' }}
-      </button>
-    </form>
+          <small class="error-message" *ngIf="email.errors?.['required'] && email.touched">
+            Email is required.
+          </small>
 
-    @if (error) {
-      <p class="error-message">{{ error }}</p>
-    }
+          <small class="error-message" *ngIf="email.errors?.['email'] && email.touched">
+            Enter a valid email.
+          </small>
+        </div>
 
-    @if (message) {
-      <p class="success-message">{{ message }}</p>
-    }
+        <div class="form-group">
+          <label for="register-password">Password</label>
+          <input
+            id="register-password"
+            name="password"
+            type="password"
+            placeholder="Create a password"
+            [(ngModel)]="registerData.password"
+            #password="ngModel"
+            required
+            minlength="6"
+          />
 
-    <p class="switch-link">
-      Already have an account?
-      <a routerLink="/login">Login</a>
-    </p>
+          <small class="error-message" *ngIf="password.errors?.['required'] && password.touched">
+            Password is required.
+          </small>
+
+          <small class="error-message" *ngIf="password.errors?.['minlength'] && password.touched">
+            Password must be at least 6 characters.
+          </small>
+        </div>
+
+        <button type="submit" class="auth-btn">Register</button>
+      </form>
+    </div>
   </div>
 </section>

@@ -1,19 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { ApiService, Station } from '../../services/api';
 
 @Component({
   selector: 'app-districts',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './districts.html',
   styleUrl: './districts.css'
 })
 export class Districts implements OnInit {
   districts: any[] = [];
+  filteredDistricts: any[] = [];
   errorMessage = '';
   isLoading = true;
+
+  searchTerm = '';
+  selectedStatus = 'All';
 
   constructor(
     private apiService: ApiService,
@@ -28,9 +33,6 @@ export class Districts implements OnInit {
       summary: this.apiService.getAirSummary()
     }).subscribe({
       next: ({ stations, summary }) => {
-        console.log('Stations:', stations);
-        console.log('Summary:', summary);
-
         this.districts = stations.map((station: Station) => {
           const summaryItem = summary.find(
             (item: any) => item.station_name === station.name
@@ -44,6 +46,7 @@ export class Districts implements OnInit {
           };
         });
 
+        this.applyFilters();
         this.isLoading = false;
         this.cdr.detectChanges();
       },
@@ -53,6 +56,20 @@ export class Districts implements OnInit {
         this.isLoading = false;
         this.cdr.detectChanges();
       }
+    });
+  }
+
+  applyFilters(): void {
+    this.filteredDistricts = this.districts.filter((district) => {
+      const matchesSearch = district.name
+        .toLowerCase()
+        .includes(this.searchTerm.toLowerCase());
+
+      const matchesStatus =
+        this.selectedStatus === 'All' ||
+        district.status === this.selectedStatus;
+
+      return matchesSearch && matchesStatus;
     });
   }
 

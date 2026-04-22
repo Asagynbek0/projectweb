@@ -1,92 +1,171 @@
-.login-page {
-  display: flex;
-  justify-content: center;
-  padding-top: 40px;
+.auth-page {
+  padding: 28px;
+  background: #f0f4f9;
+  min-height: calc(100vh - 72px);
 }
 
-.login-card {
-  width: 100%;
-  max-width: 500px;
-  background: white;
-  border-radius: 20px;
-  padding: 32px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+.auth-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 24px;
+  align-items: stretch;
 }
 
-.login-card h1 {
-  font-size: 36px;
-  color: #1e8f6d;
-  margin-bottom: 8px;
+.auth-info,
+.auth-card {
+  background: #ffffff;
+  border: 1px solid #e4ecf2;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
-.subtitle {
-  color: #6b7280;
-  margin-bottom: 24px;
-}
-
-form {
+.auth-info {
+  padding: 42px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.94)),
+    url('/images/almaty-map.png');
+  background-size: cover;
+  background-position: center;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
-label {
+.auth-badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #3b82f6;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.auth-info h1 {
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: #1c2b3a;
+  margin-bottom: 18px;
+}
+
+.auth-info p {
+  font-size: 19px;
+  line-height: 1.7;
+  color: #6b7f91;
+  max-width: 640px;
+  margin: 0;
+}
+
+.auth-card {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-card h2 {
+  font-size: 34px;
+  line-height: 1.1;
+  color: #1c2b3a;
   margin-bottom: 8px;
-  margin-top: 12px;
-  font-weight: bold;
-  color: #374151;
 }
 
-input {
-  padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-size: 16px;
+.auth-subtitle {
+  font-size: 15px;
+  color: #6b7f91;
+  margin-bottom: 22px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b7f91;
+}
+
+.form-group input {
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid #dbe6ef;
+  background: #f8fbff;
+  color: #1c2b3a;
+  padding: 0 14px;
+  font-size: 15px;
   outline: none;
 }
 
-input:focus {
-  border-color: #1e8f6d;
+.form-group input::placeholder {
+  color: #9aaaba;
 }
 
-button {
-  margin-top: 24px;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background-color: #1e8f6d;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+.form-group input:focus {
+  border-color: #93c5fd;
+  background: #ffffff;
 }
 
-button:hover {
-  opacity: 0.9;
+.form-group input.ng-invalid.ng-touched {
+  border-color: #ef4444;
+  background: #fff8f8;
 }
 
 .error-message {
-  margin-top: 16px;
-  color: #b91c1c;
-  font-weight: bold;
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 700;
 }
 
-.success-message {
-  margin-top: 16px;
-  color: #166534;
-  font-weight: bold;
+.auth-btn {
+  margin-top: 6px;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.15s ease;
 }
 
-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+.auth-btn:hover {
+  opacity: 0.93;
 }
 
-.switch-link {
-  margin-top: 20px;
-  color: #4b5563;
+@media (max-width: 980px) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+  }
 }
 
-.switch-link a {
-  color: #1e8f6d;
-  text-decoration: none;
-  font-weight: bold;
+@media (max-width: 700px) {
+  .auth-page {
+    padding: 18px;
+  }
+
+  .auth-info,
+  .auth-card {
+    padding: 20px;
+  }
+
+  .auth-info h1 {
+    font-size: 38px;
+  }
+
+  .auth-info p {
+    font-size: 17px;
+  }
 }

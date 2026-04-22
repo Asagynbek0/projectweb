@@ -1,26 +1,36 @@
 <section class="dashboard-page">
-
-  <div class="dashboard-header">
-    <div>
-      <p class="dashboard-label">Monitoring Overview</p>
+  <div class="dashboard-hero">
+    <div class="dashboard-intro">
+      <span class="hero-badge">Monitoring Overview</span>
       <h1>Air Quality Dashboard</h1>
-      <p class="dashboard-subtitle">
-        Overview of pollution levels and trends in Almaty.
+      <p>
+        Overview of pollution levels, district conditions, and daily
+        environmental insights across Almaty.
       </p>
+    </div>
+
+    <div class="hero-summary">
+      <div class="summary-card">
+        <span class="summary-label">Average AQI</span>
+        <strong>78</strong>
+        <span class="summary-status moderate">Moderate</span>
+      </div>
+
+      <div class="summary-card">
+        <span class="summary-label">Active Stations</span>
+        <strong>8</strong>
+        <span class="summary-status live">Live</span>
+      </div>
     </div>
   </div>
 
-  <!-- TOP STATS -->
   <div class="stats-grid">
-
     <div class="stat-card">
       <div class="stat-top">
         <span>Average AQI</span>
         <span class="badge moderate">Moderate</span>
       </div>
-
       <h2>78</h2>
-
       <div class="progress">
         <div class="progress-bar moderate" style="width: 60%"></div>
       </div>
@@ -31,9 +41,7 @@
         <span>Safest District</span>
         <span class="badge good">Good</span>
       </div>
-
       <h2>Nauryzbay</h2>
-
       <div class="progress">
         <div class="progress-bar good" style="width: 30%"></div>
       </div>
@@ -44,9 +52,7 @@
         <span>Most Polluted</span>
         <span class="badge unhealthy">Unhealthy</span>
       </div>
-
       <h2>Turksib</h2>
-
       <div class="progress">
         <div class="progress-bar unhealthy" style="width: 85%"></div>
       </div>
@@ -54,96 +60,87 @@
 
     <div class="stat-card">
       <div class="stat-top">
-        <span>Active Stations</span>
-        <span class="badge live">Live</span>
+        <span>Best Time Outside</span>
+        <span class="badge live">Today</span>
       </div>
-
-      <h2>8</h2>
-
+      <h2>Morning</h2>
       <div class="progress">
-        <div class="progress-bar live" style="width: 100%"></div>
+        <div class="progress-bar live" style="width: 75%"></div>
       </div>
     </div>
-
   </div>
 
-  <!-- MAIN GRID -->
   <div class="dashboard-main">
-
-    <!-- LEFT -->
-    <div class="left">
-
-      <div class="card">
-        <h3>Pollution Trends</h3>
-
-        <div class="trend">
-          <span>Today</span>
-          <strong>78 AQI</strong>
+    <div class="left-column">
+      <div class="panel-card map-card">
+        <div class="panel-header">
+          <h3>Air Quality Map</h3>
+          <span>Almaty</span>
         </div>
 
-        <div class="trend">
-          <span>This Week</span>
-          <strong>84 AQI</strong>
-        </div>
+        <div class="map-box">
+          <img src="/images/almaty-map.png" alt="Almaty map" />
 
-        <div class="trend">
-          <span>This Month</span>
-          <strong>89 AQI</strong>
+          <div class="map-marker marker-1">78</div>
+          <div class="map-marker marker-2">63</div>
+          <div class="map-marker marker-3">92</div>
+          <div class="map-marker marker-4">68</div>
+          <div class="map-marker marker-5">99</div>
         </div>
-
       </div>
 
-      <div class="card">
-        <h3>Top Districts</h3>
-
-        <div class="district-row">
-          <span>Nauryzbay</span>
-          <div class="mini-bar good"></div>
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Pollution Trends</h3>
+          <span>Last 24 hours</span>
         </div>
 
-        <div class="district-row">
-          <span>Almaly</span>
-          <div class="mini-bar moderate"></div>
-        </div>
+        <div class="trend-list">
+          <div class="trend-row">
+            <span>Today</span>
+            <strong>78 AQI</strong>
+          </div>
 
-        <div class="district-row">
-          <span>Turksib</span>
-          <div class="mini-bar unhealthy"></div>
-        </div>
+          <div class="trend-row">
+            <span>This Week</span>
+            <strong>84 AQI</strong>
+          </div>
 
+          <div class="trend-row">
+            <span>This Month</span>
+            <strong>89 AQI</strong>
+          </div>
+        </div>
       </div>
-
     </div>
 
-    <!-- RIGHT -->
-    <div class="right">
+    <div class="right-column">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Daily Recommendation</h3>
+        </div>
 
-      <div class="card">
-        <h3>Daily Recommendation</h3>
-
-        <p>
+        <p class="recommendation-text">
           Air quality is moderate. Outdoor activity is safe for most people.
           Sensitive groups should limit prolonged exposure.
         </p>
 
-        <div class="tip">
+        <div class="tip-box">
           Best time: <strong>Morning</strong>
         </div>
       </div>
 
-      <div class="card">
-        <h3>Quick Stats</h3>
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Quick Stats</h3>
+        </div>
 
         <ul class="stats-list">
-          <li>🌿 Clean areas: 3</li>
-          <li>⚠️ Moderate: 4</li>
-          <li>🚫 Unhealthy: 1</li>
+          <li>Clean areas: 3</li>
+          <li>Moderate: 4</li>
+          <li>Unhealthy: 1</li>
         </ul>
-
       </div>
-
     </div>
-
   </div>
-
 </section>

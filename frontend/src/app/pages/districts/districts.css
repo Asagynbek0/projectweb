@@ -1,122 +1,248 @@
 .districts-page {
-  padding: 40px;
-  min-height: 100vh;
+  padding: 28px;
+  background: #f0f4f9;
+  min-height: calc(100vh - 72px);
+}
 
-  /* 🔥 фон карта */
-  background: 
-    linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)),
+.districts-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.districts-intro,
+.districts-controls-card {
+  background: #ffffff;
+  border: 1px solid #e4ecf2;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+}
+
+.districts-intro {
+  padding: 36px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.92)),
     url('/images/almaty-map.png');
-
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
 }
 
-/* HEADER */
-.districts-page h1 {
-  font-size: 42px;
-  color: white;
-  margin-bottom: 10px;
+.hero-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #3b82f6;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 16px;
 }
 
-.subtitle {
-  color: #cbd5f5;
-  margin-bottom: 30px;
+.districts-intro h1 {
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: #1c2b3a;
+  margin-bottom: 18px;
 }
 
-/* GRID */
+.districts-intro p {
+  font-size: 19px;
+  line-height: 1.7;
+  color: #6b7f91;
+  max-width: 700px;
+  margin: 0;
+}
+
+.districts-controls-card {
+  padding: 24px;
+  display: grid;
+  gap: 18px;
+  align-content: center;
+}
+
+.control-group {
+  display: grid;
+  gap: 8px;
+}
+
+.control-group label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b7f91;
+}
+
+.control-group input,
+.control-group select {
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid #dbe6ef;
+  background: #f8fbff;
+  color: #1c2b3a;
+  padding: 0 14px;
+  font-size: 15px;
+  outline: none;
+}
+
+.control-group input::placeholder {
+  color: #9aaaba;
+}
+
+.control-group input:focus,
+.control-group select:focus {
+  border-color: #93c5fd;
+  background: #ffffff;
+}
+
+.info-text,
+.error-text {
+  margin: 18px 0;
+  font-size: 16px;
+}
+
+.info-text {
+  color: #6b7f91;
+}
+
+.error-text {
+  color: #ef4444;
+  font-weight: 700;
+}
+
 .district-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
 }
 
-/* CARD */
 .district-card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-
-  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #e4ecf2;
+  border-radius: 22px;
   padding: 22px;
-
-  border: 1px solid rgba(255, 255, 255, 0.15);
-
-  transition: 0.25s ease;
-  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: 0.15s ease;
 }
 
 .district-card:hover {
-  transform: translateY(-6px) scale(1.01);
-  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
 }
 
-/* TITLE */
-.district-card h2 {
-  font-size: 22px;
-  color: white;
-  margin-bottom: 15px;
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 14px;
+  margin-bottom: 18px;
 }
 
-/* AQI BLOCK */
-.aqi-box {
-  background: rgba(255, 255, 255, 0.08);
-  padding: 16px;
-  border-radius: 14px;
-  margin-bottom: 15px;
-}
-
-.aqi-box p {
-  margin: 0;
-  color: #cbd5f5;
-  font-size: 14px;
-}
-
-.aqi-value {
+.card-top h2 {
   font-size: 34px;
-  font-weight: 700;
-  color: white;
+  line-height: 1.08;
+  letter-spacing: -1px;
+  color: #1c2b3a;
+  margin: 0;
 }
 
-/* STATUS */
-.status {
-  display: inline-block;
-  padding: 6px 12px;
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
-.status.good {
-  background: rgba(34, 197, 94, 0.2);
-  color: #4ade80;
+.status-badge.good {
+  background: #f0fdf4;
+  color: #22c55e;
 }
 
-.status.moderate {
-  background: rgba(250, 204, 21, 0.2);
-  color: #facc15;
+.status-badge.moderate {
+  background: #fffbeb;
+  color: #f59e0b;
 }
 
-.status.unhealthy {
-  background: rgba(239, 68, 68, 0.2);
+.status-badge.unhealthy {
+  background: #fef2f2;
   color: #ef4444;
 }
 
-/* BUTTON */
-.district-card button {
-  margin-top: 18px;
-  width: 100%;
-
-  background: linear-gradient(135deg, #3b82f6, #06b6d4);
-  border: none;
-  border-radius: 12px;
-
-  padding: 12px;
-  color: white;
-  font-weight: 600;
-
-  transition: 0.2s;
+.aqi-panel {
+  background: #f3f7fb;
+  border: 1px solid #e4ecf2;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 18px;
 }
 
-.district-card button:hover {
-  opacity: 0.9;
+.aqi-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b7f91;
+  margin-bottom: 8px;
+}
+
+.aqi-value {
+  font-size: 48px;
+  line-height: 1;
+  color: #1c2b3a;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.district-footer button {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.district-footer button:hover {
+  opacity: 0.93;
+}
+
+@media (max-width: 1150px) {
+  .districts-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .districts-page {
+    padding: 18px;
+  }
+
+  .districts-intro,
+  .districts-controls-card,
+  .district-card {
+    padding: 18px;
+  }
+
+  .districts-intro h1 {
+    font-size: 38px;
+  }
+
+  .districts-intro p {
+    font-size: 17px;
+  }
+
+  .district-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-top h2 {
+    font-size: 28px;
+  }
 }

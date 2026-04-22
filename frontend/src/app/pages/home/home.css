@@ -1,87 +1,237 @@
+.home-page {
+  padding: 28px;
+  background: #f0f4f9;
+  min-height: calc(100vh - 62px);
+}
 
-.overlay {
-  background: linear-gradient(
-    to right,
-    rgba(3, 57, 85, 0.8),
-    rgba(14, 165, 233, 0.6)
-  );
-  height: 100%;
+.home-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.hero-left,
+.hero-right {
+  background: #ffffff;
+  border: 1px solid #e4ecf2;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+}
+
+.hero-left {
+  padding: 42px;
+  min-height: 430px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.9)),
+    url('/images/almaty-map.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #3b82f6;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.hero-left h1 {
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: #1c2b3a;
+  margin-bottom: 22px;
+  max-width: 680px;
+}
+
+.hero-text {
+  font-size: 22px;
+  line-height: 1.6;
+  color: #6b7f91;
+  max-width: 700px;
+  margin-bottom: 30px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-
-.hero-content {
-  text-align: center;
-  color: white;
-  max-width: 700px;
-}
-
-.hero-content h1 {
-  font-size: 48px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-.hero-content p {
-  font-size: 18px;
-  margin-bottom: 30px;
-  color: #d1d5db;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-}
-
-.btn {
-  padding: 12px 24px;
-  border-radius: 999px;
-  font-weight: 600;
+  min-width: 190px;
+  height: 50px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 800;
   text-decoration: none;
+  transition: 0.15s ease;
 }
 
-.btn.primary {
-  background: #0ea5e9;
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%);
+  color: white;
 }
 
-.btn.primary:hover {
-  background: #0284c7;
+.btn-primary:hover {
+  opacity: 0.92;
 }
 
-.btn.secondary {
-  background: white;
-  color: #0369a1;
+.btn-secondary {
+  background: #ffffff;
+  color: #1c2b3a;
+  border: 1.5px solid #dbe6ef;
 }
 
-.btn.secondary:hover {
-  background: #e5e7eb;
+.btn-secondary:hover {
+  background: #f8fbff;
 }
 
-.features {
+.hero-right {
+  padding: 20px;
   display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero-panel {
+  background: #f0f4f9;
+  border-radius: 18px;
+  padding: 20px;
+  border: 1px solid #e4ecf2;
+}
+
+.panel-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b7f91;
+  margin-bottom: 8px;
+}
+
+.panel-value {
+  font-size: 42px;
+  font-weight: 800;
+  color: #1c2b3a;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.panel-status {
+  font-size: 14px;
+  color: #6b7f91;
+  line-height: 1.5;
+}
+
+.hero-mini-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.mini-card {
+  background: #f0f4f9;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid #e4ecf2;
+}
+
+.mini-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7f91;
+  margin-bottom: 8px;
+}
+
+.mini-card strong {
+  font-size: 18px;
+  color: #1c2b3a;
+  font-weight: 800;
+}
+
+.home-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  padding: 50px;
-  justify-content: center;
 }
 
 .feature-card {
-  background: white;
-  padding: 25px;
-  border-radius: 16px;
-  width: 250px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e4ecf2;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
-.feature-card h3 {
+.feature-kicker {
+  font-size: 11px;
+  font-weight: 800;
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   margin-bottom: 10px;
 }
 
-.hero {
-  height: 90vh;
-  background: url('/images/almaty-map.png') center/cover no-repeat;
-  position: relative;
+.feature-card h3 {
+  font-size: 28px;
+  line-height: 1.2;
+  color: #1c2b3a;
+  margin-bottom: 12px;
 }
 
+.feature-card p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #6b7f91;
+}
+
+@media (max-width: 1100px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .home-features {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-left h1 {
+    font-size: 48px;
+  }
+
+  .hero-text {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 700px) {
+  .home-page {
+    padding: 18px;
+  }
+
+  .hero-left,
+  .hero-right,
+  .feature-card {
+    padding: 18px;
+  }
+
+  .hero-left h1 {
+    font-size: 38px;
+  }
+
+  .hero-mini-grid {
+    grid-template-columns: 1fr;
+  }
+}

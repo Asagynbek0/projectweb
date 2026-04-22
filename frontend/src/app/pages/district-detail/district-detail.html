@@ -27,15 +27,15 @@
     </div>
 
     <div class="pollution-grid">
-  <div class="pollution-card">
-    <span class="pollution-name">NO2</span>
-    <strong>{{ latestReading.no2 }}</strong>
-  </div>
+      <div class="pollution-card" *ngIf="latestReading.no2 !== null">
+        <span class="pollution-name">NO2</span>
+        <strong>{{ latestReading.no2 }}</strong>
+      </div>
 
-  <div class="pollution-card">
-    <span class="pollution-name">CO</span>
-    <strong>{{ latestReading.co }}</strong>
-  </div>
-</div>
+      <div class="pollution-card" *ngIf="latestReading.co !== null">
+        <span class="pollution-name">CO</span>
+        <strong>{{ latestReading.co }}</strong>
+      </div>
+    </div>
   </div>
 </section>

@@ -2,3 +2,9 @@ airquality_backend/db.sqlite3
 airquality_backend/venv/
 **/__pycache__/
 *.pyc
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+db.sqlite3
+*.sqlite3

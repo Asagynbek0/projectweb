@@ -31,6 +31,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 520px;
 }
 
 .auth-badge {
@@ -98,6 +99,7 @@
 }
 
 .form-group input {
+  width: 100%;
   height: 48px;
   border-radius: 14px;
   border: 1px solid #dbe6ef;
@@ -144,6 +146,7 @@
 
 .auth-btn {
   margin-top: 6px;
+  width: 100%;
   height: 48px;
   border: none;
   border-radius: 14px;
@@ -178,6 +181,10 @@
 @media (max-width: 980px) {
   .auth-shell {
     grid-template-columns: 1fr;
+  }
+
+  .auth-info {
+    min-height: 280px;
   }
 }
 

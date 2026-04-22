@@ -15,7 +15,8 @@ export class Register {
   registerData = {
     username: '',
     email: '',
-    password: ''
+    password: '',
+    password2: ''
   };
 
   errorMessage = '';
@@ -36,11 +37,15 @@ export class Register {
       return;
     }
 
+    if (this.registerData.password !== this.registerData.password2) {
+      this.errorMessage = 'Passwords do not match.';
+      return;
+    }
+
     this.isSubmitting = true;
 
     this.apiService.register(this.registerData).subscribe({
-      next: (response) => {
-        console.log('Register success:', response);
+      next: () => {
         this.successMessage = 'Registration successful!';
         this.isSubmitting = false;
 
@@ -53,12 +58,26 @@ export class Register {
 
         if (error.status === 400) {
           if (error.error?.username) {
-            this.errorMessage = 'This username is already taken.';
+            this.errorMessage = Array.isArray(error.error.username)
+              ? error.error.username[0]
+              : 'This username is already taken.';
           } else if (error.error?.email) {
-            this.errorMessage = 'This email is already in use.';
+            this.errorMessage = Array.isArray(error.error.email)
+              ? error.error.email[0]
+              : 'This email is already in use.';
+          } else if (error.error?.password) {
+            this.errorMessage = Array.isArray(error.error.password)
+              ? error.error.password[0]
+              : 'Password is not valid.';
+          } else if (error.error?.password2) {
+            this.errorMessage = Array.isArray(error.error.password2)
+              ? error.error.password2[0]
+              : 'Confirm password is not valid.';
           } else {
             this.errorMessage = 'Please check your data and try again.';
           }
+        } else if (error.status === 0) {
+          this.errorMessage = 'Cannot connect to server.';
         } else {
           this.errorMessage = 'Could not register. Please try again.';
         }

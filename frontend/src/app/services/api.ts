@@ -8,6 +8,8 @@ export interface Station {
   aqi?: number;
   status?: string;
   district?: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface Reading {

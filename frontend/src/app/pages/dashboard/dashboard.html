@@ -1,146 +1,172 @@
 <section class="dashboard-page">
-  <div class="dashboard-hero">
-    <div class="dashboard-intro">
-      <span class="hero-badge">Monitoring Overview</span>
-      <h1>Air Quality Dashboard</h1>
-      <p>
-        Overview of pollution levels, district conditions, and daily
-        environmental insights across Almaty.
-      </p>
-    </div>
+  <p *ngIf="isLoading" class="info-text">Loading dashboard...</p>
+  <p *ngIf="errorMessage" class="error-text">{{ errorMessage }}</p>
 
-    <div class="hero-summary">
-      <div class="summary-card">
-        <span class="summary-label">Average AQI</span>
-        <strong>78</strong>
-        <span class="summary-status moderate">Moderate</span>
-      </div>
-
-      <div class="summary-card">
-        <span class="summary-label">Active Stations</span>
-        <strong>8</strong>
-        <span class="summary-status live">Live</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-top">
-        <span>Average AQI</span>
-        <span class="badge moderate">Moderate</span>
-      </div>
-      <h2>78</h2>
-      <div class="progress">
-        <div class="progress-bar moderate" style="width: 60%"></div>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-top">
-        <span>Safest District</span>
-        <span class="badge good">Good</span>
-      </div>
-      <h2>Nauryzbay</h2>
-      <div class="progress">
-        <div class="progress-bar good" style="width: 30%"></div>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-top">
-        <span>Most Polluted</span>
-        <span class="badge unhealthy">Unhealthy</span>
-      </div>
-      <h2>Turksib</h2>
-      <div class="progress">
-        <div class="progress-bar unhealthy" style="width: 85%"></div>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-top">
-        <span>Best Time Outside</span>
-        <span class="badge live">Today</span>
-      </div>
-      <h2>Morning</h2>
-      <div class="progress">
-        <div class="progress-bar live" style="width: 75%"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="dashboard-main">
-    <div class="left-column">
-      <div class="panel-card map-card">
-        <div class="panel-header">
-          <h3>Air Quality Map</h3>
-          <span>Almaty</span>
-        </div>
-
-        <div class="map-box">
-          <img src="/images/almaty-map.png" alt="Almaty map" />
-
-          <div class="map-marker marker-1">78</div>
-          <div class="map-marker marker-2">63</div>
-          <div class="map-marker marker-3">92</div>
-          <div class="map-marker marker-4">68</div>
-          <div class="map-marker marker-5">99</div>
-        </div>
-      </div>
-
-      <div class="panel-card">
-        <div class="panel-header">
-          <h3>Pollution Trends</h3>
-          <span>Last 24 hours</span>
-        </div>
-
-        <div class="trend-list">
-          <div class="trend-row">
-            <span>Today</span>
-            <strong>78 AQI</strong>
-          </div>
-
-          <div class="trend-row">
-            <span>This Week</span>
-            <strong>84 AQI</strong>
-          </div>
-
-          <div class="trend-row">
-            <span>This Month</span>
-            <strong>89 AQI</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="right-column">
-      <div class="panel-card">
-        <div class="panel-header">
-          <h3>Daily Recommendation</h3>
-        </div>
-
-        <p class="recommendation-text">
-          Air quality is moderate. Outdoor activity is safe for most people.
-          Sensitive groups should limit prolonged exposure.
+  <ng-container *ngIf="!isLoading && !errorMessage">
+    <div class="dashboard-hero">
+      <div class="dashboard-intro">
+        <span class="hero-badge">Monitoring Overview</span>
+        <h1>Air Quality Dashboard</h1>
+        <p>
+          Overview of pollution levels, district conditions, and daily
+          environmental insights across Almaty.
         </p>
-
-        <div class="tip-box">
-          Best time: <strong>Morning</strong>
-        </div>
       </div>
 
-      <div class="panel-card">
-        <div class="panel-header">
-          <h3>Quick Stats</h3>
+      <div class="hero-summary">
+        <div class="summary-card">
+          <span class="summary-label">Average AQI</span>
+          <strong>{{ averageAqi }}</strong>
+          <span class="summary-status moderate">Live city average</span>
         </div>
 
-        <ul class="stats-list">
-          <li>Clean areas: 3</li>
-          <li>Moderate: 4</li>
-          <li>Unhealthy: 1</li>
-        </ul>
+        <div class="summary-card">
+          <span class="summary-label">Active Stations</span>
+          <strong>{{ activeStations }}</strong>
+          <span class="summary-status live">Online now</span>
+        </div>
       </div>
     </div>
-  </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-top">
+          <span>Average AQI</span>
+          <span class="badge moderate">Moderate</span>
+        </div>
+        <h2>{{ averageAqi }}</h2>
+        <div class="progress">
+          <div
+            class="progress-bar moderate"
+            [style.width.%]="averageAqi > 100 ? 100 : averageAqi"
+          ></div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span>Safest District</span>
+          <span class="badge good">Good</span>
+        </div>
+        <h2>{{ safestDistrict }}</h2>
+        <div class="progress">
+          <div class="progress-bar good" style="width: 35%"></div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span>Most Polluted</span>
+          <span class="badge unhealthy">Alert</span>
+        </div>
+        <h2>{{ mostPollutedDistrict }}</h2>
+        <div class="progress">
+          <div class="progress-bar unhealthy" style="width: 85%"></div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span>Best Time Outside</span>
+          <span class="badge live">Today</span>
+        </div>
+        <h2>Morning</h2>
+        <div class="progress">
+          <div class="progress-bar live" style="width: 75%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-main">
+      <div class="left-column">
+        <div class="panel-card map-card">
+          <div class="panel-header">
+            <h3>Air Quality Map</h3>
+            <span *ngIf="mapDistricts.length > 0">Real station data</span>
+            <span *ngIf="mapDistricts.length === 0">No coordinates available</span>
+          </div>
+
+          <div class="map-box">
+            <img src="/images/almaty-map.png" alt="Almaty map" />
+
+            <div
+              class="map-marker"
+              *ngFor="let district of mapDistricts"
+              [ngClass]="getMarkerClass(district.status)"
+              [style.left]="getMarkerLeft(district.longitude)"
+              [style.top]="getMarkerTop(district.latitude)"
+              [title]="district.name + ' - AQI ' + district.aqi"
+            >
+              {{ district.aqi }}
+            </div>
+
+            <div *ngIf="mapDistricts.length === 0" class="map-empty">
+              Coordinates are missing in backend data.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>Pollution Trends</h3>
+            <span>Calculated from readings</span>
+          </div>
+
+          <div class="trend-list">
+            <div class="trend-row">
+              <span>Today</span>
+              <strong>{{ todayAqi }} AQI</strong>
+            </div>
+
+            <div class="trend-row">
+              <span>This Week</span>
+              <strong>{{ weekAqi }} AQI</strong>
+            </div>
+
+            <div class="trend-row">
+              <span>This Month</span>
+              <strong>{{ monthAqi }} AQI</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>District Status</h3>
+            <span>{{ districts.length }} districts</span>
+          </div>
+
+          <div class="district-list">
+            <div class="district-row" *ngFor="let district of districts">
+              <div class="district-text">
+                <strong>{{ district.name }}</strong>
+                <span>{{ district.aqi }} AQI</span>
+              </div>
+
+              <span class="badge" [ngClass]="getBadgeClass(district.status)">
+                {{ district.status }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>Daily Recommendation</h3>
+          </div>
+
+          <p class="recommendation-text">
+            Check the cleanest districts first and limit long outdoor activity
+            in higher AQI zones during the afternoon.
+          </p>
+
+          <div class="tip-box">
+            Best time: <strong>Morning</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </section>

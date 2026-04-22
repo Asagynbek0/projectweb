@@ -1,63 +1,69 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../services/api';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, RouterLink],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './register.html',
-  styleUrl: './register.css'
+  styleUrls: ['./register.css']
 })
 export class Register {
-  username: string = '';
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
+  registerData = {
+    username: '',
+    email: '',
+    password: ''
+  };
 
-  message: string = '';
-  error: string = '';
-  isLoading: boolean = false;
+  errorMessage = '';
+  successMessage = '';
+  isSubmitting = false;
 
   constructor(
     private apiService: ApiService,
     private router: Router
   ) {}
 
-  onSubmit() {
-    this.message = '';
-    this.error = '';
+  onSubmit(form: NgForm): void {
+    this.errorMessage = '';
+    this.successMessage = '';
 
-    if (!this.username || !this.email || !this.password || !this.confirmPassword) {
-      this.error = 'Please fill in all fields.';
+    if (form.invalid) {
+      form.control.markAllAsTouched();
       return;
     }
 
-    if (this.password !== this.confirmPassword) {
-      this.error = 'Passwords do not match.';
-      return;
-    }
+    this.isSubmitting = true;
 
-    this.isLoading = true;
-
-    this.apiService.register({
-      username: this.username,
-      email: this.email,
-      password: this.password,
-      password2: this.password
-    }).subscribe({
+    this.apiService.register(this.registerData).subscribe({
       next: (response) => {
-        this.isLoading = false;
-        console.log('Register response:', response);
-        this.message = 'Registration successful! You can now log in.';
+        console.log('Register success:', response);
+        this.successMessage = 'Registration successful!';
+        this.isSubmitting = false;
+
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 1200);
+        }, 1000);
       },
       error: (error) => {
-        this.isLoading = false;
         console.error('Register error:', error);
-        this.error = 'Registration failed. Please check your data.';
+
+        if (error.status === 400) {
+          if (error.error?.username) {
+            this.errorMessage = 'This username is already taken.';
+          } else if (error.error?.email) {
+            this.errorMessage = 'This email is already in use.';
+          } else {
+            this.errorMessage = 'Please check your data and try again.';
+          }
+        } else {
+          this.errorMessage = 'Could not register. Please try again.';
+        }
+
+        this.isSubmitting = false;
       }
     });
   }

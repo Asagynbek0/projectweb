@@ -25,7 +25,6 @@
             #username="ngModel"
             required
           />
-
           <small class="error-message" *ngIf="username.invalid && username.touched">
             Username is required.
           </small>
@@ -43,18 +42,26 @@
             required
             minlength="6"
           />
-
           <small class="error-message" *ngIf="password.errors?.['required'] && password.touched">
             Password is required.
           </small>
-
           <small class="error-message" *ngIf="password.errors?.['minlength'] && password.touched">
             Password must be at least 6 characters.
           </small>
         </div>
 
-        <button type="submit" class="auth-btn">Login</button>
+        <p class="server-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <p class="server-success" *ngIf="successMessage">{{ successMessage }}</p>
+
+        <button type="submit" class="auth-btn" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Logging in...' : 'Login' }}
+        </button>
       </form>
+
+      <p class="auth-link">
+        Don’t have an account?
+        <a routerLink="/register">Register</a>
+      </p>
     </div>
   </div>
 </section>
